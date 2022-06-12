@@ -73,6 +73,23 @@ public class AppConfig implements ApplicationContextAware {
         return platform;
     }
 
+    /**
+     * Get platform name for browser.
+     *
+     * @return
+     */
+    public String getExecutionOn() {
+        var platform = System.getProperty("execution");
+        if (Objects.isNull(platform))
+            platform = Reporter
+                    .getCurrentTestResult()
+                    .getTestContext()
+                    .getCurrentXmlTest()
+                    .getParameter("execution");
+
+        return platform;
+    }
+
     public static AppConfig getBean(Class<AppConfig> appConfigClass) {
         return context.getBean(appConfigClass);
     }

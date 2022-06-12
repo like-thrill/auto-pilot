@@ -23,8 +23,8 @@ public class DriverHook {
     private final AppConfig appConfig;
     private WebDriver driver;
     private Scenario scenario;
-    private WebDriverBuilder webDriverBuilder;
-    private WebDriverConfig webDriverConfig;
+    private final WebDriverBuilder webDriverBuilder;
+    private final WebDriverConfig webDriverConfig;
 
 
     @Given("Launch the browser")

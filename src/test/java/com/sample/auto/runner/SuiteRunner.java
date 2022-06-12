@@ -8,8 +8,8 @@ import org.testng.annotations.*;
         features = {"src/test/resources/features/"},
         plugin = {"json:target/cucumber/cucumber.json",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
-        glue = {"com.sample.auto.stepdefinations"},
-        tags = "@amazon"
+        glue = {"com.sample.auto.stepdefinitions"},
+        tags = "@web"
 )
 public class SuiteRunner extends AbstractTestNGCucumberTests {
 
