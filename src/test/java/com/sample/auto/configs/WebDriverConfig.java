@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
 
 import java.util.LinkedHashMap;
@@ -28,10 +29,20 @@ public class WebDriverConfig {
         }
     }
 
+    @Profile(value = "!remote")
     @Bean
-    @Qualifier(value = "web")
     @Scope("prototype")
     public WebDriver webDriver() {
+        if (drivers.containsKey("web"))
+            return drivers.get("web").get();
+        throw new RuntimeException("No WebDriver instance found. Please invoke one by calling " +
+                "'Launch the browser' step.");
+    }
+
+    @Profile(value = "remote")
+    @Bean
+    @Scope("prototype")
+    public WebDriver remoteWebDriver() {
         if (drivers.containsKey("web"))
             return drivers.get("web").get();
         throw new RuntimeException("No WebDriver instance found. Please invoke one by calling " +

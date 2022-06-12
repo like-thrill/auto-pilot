@@ -14,9 +14,8 @@ import java.util.Objects;
 @Data
 @Configuration
 @ComponentScan(basePackages = "com.sample.auto")
-@PropertySources({
-        @PropertySource("file:./src/test/resources/properties/application.properties"),
-        @PropertySource("file:./src/test/resources/properties/custom.properties")})
+
+@PropertySource("file:./src/test/resources/properties/application.properties")
 public class AppConfig implements ApplicationContextAware {
 
     @Value("${app.url}")
@@ -27,9 +26,6 @@ public class AppConfig implements ApplicationContextAware {
 
     @Value("${app.user.password}")
     private String userPassword;
-
-    @Value("${app.selenium.timeout}")
-    private long seleniumTimeOut;
 
     private static ApplicationContext context;
 

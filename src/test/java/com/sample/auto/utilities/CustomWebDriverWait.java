@@ -1,6 +1,6 @@
 package com.sample.auto.utilities;
 
-import com.sample.auto.configs.AppConfig;
+import com.sample.auto.configs.CustomConfig;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -10,11 +10,13 @@ import java.time.Duration;
 public class CustomWebDriverWait extends LocatorConverter {
 
     protected WebDriver driver;
-    private AppConfig appConfig;
+    private CustomConfig customConfig;
+    private long timeOut;
 
     public CustomWebDriverWait(WebDriver driver) {
         this.driver = driver;
-        this.appConfig = AppConfig.getBean(AppConfig.class);
+        this.customConfig = CustomConfig.getBean(CustomConfig.class);
+        this.timeOut= this.customConfig.getSeleniumTimeOut();
     }
 
     /**
@@ -26,7 +28,7 @@ public class CustomWebDriverWait extends LocatorConverter {
     protected boolean _isElementVisible(By by) {
         try {
             new FluentWait<WebDriver>(driver)
-                    .withTimeout(Duration.ofSeconds(appConfig.getSeleniumTimeOut()))
+                    .withTimeout(Duration.ofSeconds(timeOut))
                     .pollingEvery(Duration.ofMillis(10))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(StaleElementReferenceException.class)
@@ -52,7 +54,7 @@ public class CustomWebDriverWait extends LocatorConverter {
         try {
             By eId = _convertElemToBy(element);
             new FluentWait<WebDriver>(driver)
-                    .withTimeout(Duration.ofSeconds(appConfig.getSeleniumTimeOut()))
+                    .withTimeout(Duration.ofSeconds(timeOut))
                     .pollingEvery(Duration.ofMillis(10))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(StaleElementReferenceException.class)
@@ -78,7 +80,7 @@ public class CustomWebDriverWait extends LocatorConverter {
         try {
             By eID = _convertElemToBy(element);
             new FluentWait<WebDriver>(driver)
-                    .withTimeout(Duration.ofSeconds(appConfig.getSeleniumTimeOut()))
+                    .withTimeout(Duration.ofSeconds(timeOut))
                     .pollingEvery(Duration.ofMillis(10))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(StaleElementReferenceException.class)
@@ -103,7 +105,7 @@ public class CustomWebDriverWait extends LocatorConverter {
     protected boolean _isElementPresent(By by) {
         try {
             new FluentWait<WebDriver>(driver)
-                    .withTimeout(Duration.ofSeconds(appConfig.getSeleniumTimeOut()))
+                    .withTimeout(Duration.ofSeconds(timeOut))
                     .pollingEvery(Duration.ofMillis(10))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(StaleElementReferenceException.class)

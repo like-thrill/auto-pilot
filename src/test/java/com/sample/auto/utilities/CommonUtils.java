@@ -1,14 +1,18 @@
 package com.sample.auto.utilities;
 
-import com.sample.auto.configs.AppConfig;
+import com.sample.auto.configs.CustomConfig;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Coordinates;
+import org.openqa.selenium.interactions.Locatable;
 
 public class CommonUtils extends CustomWebDriverWait {
-    private AppConfig appConfig;
+    private CustomConfig customConfig;
+    private long timeOut;
 
     public CommonUtils(WebDriver driver) {
         super(driver);
-        this.appConfig = AppConfig.getBean(AppConfig.class);
+        this.customConfig = CustomConfig.getBean(CustomConfig.class);
+        this.timeOut= customConfig.getSeleniumTimeOut();
     }
 
     public void _clear(WebElement element) throws Exception {
@@ -53,7 +57,7 @@ public class CommonUtils extends CustomWebDriverWait {
         By eId = _convertElemToBy(element);
         if (!_isElementVisible(eId))
             throw new RuntimeException("Unable to locate the element even after waiting for "
-                    + appConfig.getCurrentOS() + " seconds");
+                    + timeOut + " seconds");
         driver.findElement(eId).clear();
         driver.findElement(eId).sendKeys(keysSequence);
     }
@@ -68,7 +72,7 @@ public class CommonUtils extends CustomWebDriverWait {
         By eId = _convertElemToBy(element);
         if (!_isElementVisible(eId))
             throw new RuntimeException("Unable to locate the element even after waiting for "
-                    + appConfig.getSeleniumTimeOut() + " seconds");
+                    + timeOut + " seconds");
         driver.findElement(eId).clear();
         driver.findElement(eId).sendKeys(keys);
     }
@@ -82,7 +86,7 @@ public class CommonUtils extends CustomWebDriverWait {
     public void _sendKeys(By by, Keys keys) {
         if (!_isElementVisible(by))
             throw new RuntimeException("Unable to locate the element even after waiting for "
-                    + appConfig.getSeleniumTimeOut() + " seconds");
+                    + timeOut + " seconds");
         driver.findElement(by).clear();
         driver.findElement(by).sendKeys(keys);
     }
@@ -96,7 +100,7 @@ public class CommonUtils extends CustomWebDriverWait {
     public void _sendKeys(By element, String keysSequence) {
         if (!_isElementVisible(element))
             throw new RuntimeException("Unable to locate the element even after waiting for "
-                    + appConfig.getSeleniumTimeOut() + " seconds");
+                    + timeOut + " seconds");
         driver.findElement(element).clear();
         driver.findElement(element).sendKeys(keysSequence);
     }
@@ -110,7 +114,7 @@ public class CommonUtils extends CustomWebDriverWait {
         By eID = _convertElemToBy(element);
         if (!_isElementVisible(eID))
             throw new RuntimeException("Unable to locate the element even after waiting for "
-                    + appConfig.getSeleniumTimeOut() + " seconds");
+                    + timeOut + " seconds");
         driver.findElement(eID).click();
     }
 
@@ -122,7 +126,50 @@ public class CommonUtils extends CustomWebDriverWait {
     public void _click(By by) {
         if (!_isElementVisible(by))
             throw new RuntimeException("Unable to locate the element even after waiting for "
-                    + appConfig.getSeleniumTimeOut() + " seconds");
+                    + timeOut + " seconds");
         driver.findElement(by).click();
+    }
+
+    /**
+     * Performs a click operation on a By element with explicit wait
+     *
+     * @param text String
+     */
+    public void _clickOnTextContains(String text) throws Exception {
+        By element = _getByOfText(text, true, false);
+        if (!_isElementVisible(element))
+            throw new RuntimeException("Unable to locate the element even after waiting for " + timeOut + " seconds");
+        driver.findElement(element).click();
+    }
+
+    /**
+     * Performs a click operation on a By element with explicit wait
+     *
+     * @param text String
+     */
+    public void _clickOnText(String text) throws Exception {
+        By element = _getByOfText(text, false, false);
+        if (!_isElementVisible(element))
+            throw new RuntimeException("Unable to locate the element even after waiting for " + timeOut + " seconds");
+        driver.findElement(element).click();
+    }
+
+    /**
+     * Performs a scroll on a web page based on the web element co-ordinates
+     *
+     * @param element WebElement
+     */
+    public void _scrollToElement(WebElement element) {
+        Coordinates cor = ((Locatable) element).getCoordinates();
+        cor.inViewPort();
+    }
+
+    /**
+     * Performs a scroll within the provided web element
+     *
+     * @param webElement WebElement
+     */
+    public void _scrollWithinElement(WebElement webElement) {
+        ((JavascriptExecutor) this.driver).executeScript("arguments[0].scrollTop=500;", webElement);
     }
 }

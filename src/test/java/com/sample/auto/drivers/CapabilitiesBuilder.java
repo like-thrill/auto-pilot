@@ -1,5 +1,6 @@
 package com.sample.auto.drivers;
 
+import com.sample.auto.configs.CustomConfig;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -8,14 +9,20 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.CapabilityType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+@Component
 public class CapabilitiesBuilder {
 
-    public static Capabilities getCapabilities(Browser browserName) {
+    @Autowired
+    private CustomConfig customConfig;
+
+    public Capabilities getCapabilities(Browser browserName) {
         if (Browser.CHROME.equals(browserName)) {
             return getChromeOptions();
         } else if (Browser.FIREFOX.equals(browserName)) {
@@ -24,10 +31,10 @@ public class CapabilitiesBuilder {
         throw new IllegalStateException(String.format("%s is not a supported browser, or update this method.", browserName.toString()));
     }
 
-    public static ChromeOptions getChromeOptions() {
+    public ChromeOptions getChromeOptions() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setAcceptInsecureCerts(true);
-        chromeOptions.setHeadless(false);
+        chromeOptions.setHeadless(customConfig.isBrowserHeadless());
         chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--window-size=1920,1080");
@@ -38,18 +45,18 @@ public class CapabilitiesBuilder {
 
         Map<String, Object> prefs = new LinkedHashMap<>();
         prefs.put("plugins.always_open_pdf_externally", true);
-        prefs.put("download.default_directory", String.format("%s\\%s", System.getProperty("user.dir"), "DOWNLOADS_DIR"));
+        prefs.put("download.default_directory", String.format("%s\\%s", System.getProperty("user.dir"), customConfig.getDownloadsDir()));
         prefs.put("profile.default_content_settings.cookies", 2);
         chromeOptions.setExperimentalOption("prefs", prefs);
 
         // To get error console logs
         LoggingPreferences logPrefs = new LoggingPreferences();
-        logPrefs.enable(LogType.BROWSER, Level.parse("SEVERE"));
+        logPrefs.enable(LogType.BROWSER, Level.parse(customConfig.getSeleniumLog()));
         chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
         return chromeOptions;
     }
 
-    public static FirefoxOptions getFirefoxOptions() {
+    public FirefoxOptions getFirefoxOptions() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         return firefoxOptions;
     }

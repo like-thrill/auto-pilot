@@ -15,6 +15,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.net.MalformedURLException;
+
 @RequiredArgsConstructor
 @CucumberContextConfiguration
 @ContextConfiguration(classes = {AppConfig.class})
@@ -28,7 +30,7 @@ public class DriverHook {
 
 
     @Given("Launch the browser")
-    public void launchTheBrowser() {
+    public void launchTheBrowser() throws MalformedURLException {
         this.driver = webDriverBuilder.setupDriver(appConfig.getPlatFormName());
         webDriverConfig.setDriver(this.driver, "web");
         this.driver.get(appConfig.getUrl());
