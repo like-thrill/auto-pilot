@@ -16,8 +16,9 @@ public class HomeHook {
     private HomePage homePage;
 
     @When("search for TV")
-    public void searchForTV() {
+    public void searchForTV() throws InterruptedException {
         homePage = new HomePage(web);
+        Thread.sleep(20000);
     }
 
     @Then("select range filter high to low")
