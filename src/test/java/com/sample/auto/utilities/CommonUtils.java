@@ -1,10 +1,14 @@
 package com.sample.auto.utilities;
 
 import com.sample.auto.configs.CustomConfig;
+import lombok.extern.java.Log;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 
+import java.util.Set;
+
+@Log
 public class CommonUtils extends CustomWebDriverWait {
     private CustomConfig customConfig;
     private long timeOut;
@@ -12,7 +16,7 @@ public class CommonUtils extends CustomWebDriverWait {
     public CommonUtils(WebDriver driver) {
         super(driver);
         this.customConfig = CustomConfig.getBean(CustomConfig.class);
-        this.timeOut= customConfig.getSeleniumTimeOut();
+        this.timeOut = customConfig.getSeleniumTimeOut();
     }
 
     public void _clear(WebElement element) throws Exception {
@@ -165,11 +169,51 @@ public class CommonUtils extends CustomWebDriverWait {
     }
 
     /**
+     * Performs a scroll on a web page based on the web element co-ordinates
+     *
+     * @param by By
+     */
+    public void _scrollToElement(By by) {
+        WebElement element = driver.findElement(by);
+        Coordinates cor = ((Locatable) element).getCoordinates();
+        cor.inViewPort();
+    }
+
+    /**
      * Performs a scroll within the provided web element
      *
      * @param webElement WebElement
      */
     public void _scrollWithinElement(WebElement webElement) {
         ((JavascriptExecutor) this.driver).executeScript("arguments[0].scrollTop=500;", webElement);
+    }
+
+    public boolean _isElementSelected(By by) {
+        _isElementPresent(by);
+        return driver.findElement(by).isSelected();
+    }
+
+    public void _switchTheNextTab() {
+        var currentWindow = driver.getWindowHandle();
+        Set<String> windows = driver.getWindowHandles();
+        if (windows.size() > 2)
+            throw new RuntimeException("More than 2 tabs opened.");
+        for (var window : windows) {
+            if (!window.equals(currentWindow))
+                driver.switchTo().window(window);
+        }
+    }
+
+    public String _getText(WebElement element) throws Exception {
+        By eID = _convertElemToBy(element);
+        return driver.findElement(eID).getText();
+    }
+
+    public void _log(Object message) {
+        log.info(String.valueOf(message));
+        if (customConfig.getScenario() != null)
+            customConfig.getScenario().log("\t> " + message.toString());
+        else
+            System.out.println("");
     }
 }

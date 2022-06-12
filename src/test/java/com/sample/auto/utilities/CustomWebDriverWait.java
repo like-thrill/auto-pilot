@@ -16,7 +16,7 @@ public class CustomWebDriverWait extends LocatorConverter {
     public CustomWebDriverWait(WebDriver driver) {
         this.driver = driver;
         this.customConfig = CustomConfig.getBean(CustomConfig.class);
-        this.timeOut= this.customConfig.getSeleniumTimeOut();
+        this.timeOut = this.customConfig.getSeleniumTimeOut();
     }
 
     /**
@@ -135,6 +135,14 @@ public class CustomWebDriverWait extends LocatorConverter {
 
     protected void reSetImplicitWait() throws InterruptedException {
         this.driver.manage().wait(0);
+    }
+
+    protected void _waitForWebElementVisible(WebElement element) {
+        _isElementVisible(element);
+    }
+
+    protected void _waitForWebElementVisible(By by) {
+        _isElementVisible(by);
     }
 
     //Add more conditions if required for wait statement

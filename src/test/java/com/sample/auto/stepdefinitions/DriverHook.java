@@ -2,6 +2,7 @@ package com.sample.auto.stepdefinitions;
 
 
 import com.sample.auto.configs.AppConfig;
+import com.sample.auto.configs.CustomConfig;
 import com.sample.auto.configs.WebDriverConfig;
 import com.sample.auto.drivers.WebDriverBuilder;
 import io.cucumber.java.After;
@@ -23,6 +24,7 @@ import java.net.MalformedURLException;
 public class DriverHook {
 
     private final AppConfig appConfig;
+    private final CustomConfig customConfig;
     private WebDriver driver;
     private Scenario scenario;
     private final WebDriverBuilder webDriverBuilder;
@@ -38,6 +40,7 @@ public class DriverHook {
 
     @Before
     public void setScenario(Scenario scenario) {
+        customConfig.setScenario(scenario);
         this.scenario = scenario;
     }
 
