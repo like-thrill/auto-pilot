@@ -6,7 +6,7 @@ import org.testng.annotations.*;
 
 @CucumberOptions(
         features = {"src/test/resources/features/"},
-        plugin = {"json:target/cucumber/cucumber.json",
+        plugin = {"json:temp/reports/json/cucumber.json",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
         glue = {"com.sample.auto.stepdefinitions"},
         tags = "@web"
