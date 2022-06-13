@@ -29,20 +29,9 @@ public class WebDriverConfig {
         }
     }
 
-    @Profile(value = "!remote")
     @Bean
     @Scope("prototype")
     public WebDriver webDriver() {
-        if (drivers.containsKey("web"))
-            return drivers.get("web").get();
-        throw new RuntimeException("No WebDriver instance found. Please invoke one by calling " +
-                "'Launch the browser' step.");
-    }
-
-    @Profile(value = "remote")
-    @Bean
-    @Scope("prototype")
-    public WebDriver remoteWebDriver() {
         if (drivers.containsKey("web"))
             return drivers.get("web").get();
         throw new RuntimeException("No WebDriver instance found. Please invoke one by calling " +

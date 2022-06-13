@@ -19,11 +19,11 @@ public class CommonUtils extends CustomWebDriverWait {
         this.timeOut = customConfig.getSeleniumTimeOut();
     }
 
-    public void _clear(WebElement element) throws Exception {
-        By eID = _convertElemToBy(element);
-        driver.findElement(eID).clear();
-    }
-
+    /**
+     *
+     * @param textValue
+     * @return true if given text present in dom else false
+     */
     public boolean _isTextContainsPresent(String textValue) {
         try {
             By eID = _getByOfText(textValue, true, false);
@@ -33,6 +33,12 @@ public class CommonUtils extends CustomWebDriverWait {
         }
     }
 
+    /**
+     *
+     * @param textValue
+     * @param wildCard
+     * @return true if given text present in dom else false with wildcard string
+     */
     public boolean _isTextContainsPresent(String textValue, boolean wildCard) {
         try {
             By eID = _getByOfText(textValue, true, wildCard);
@@ -42,6 +48,11 @@ public class CommonUtils extends CustomWebDriverWait {
         }
     }
 
+    /**
+     *
+     * @param textValue
+     * @return
+     */
     public boolean _isTextPresent(String textValue) {
         try {
             By eID = _getByOfText(textValue, false, false);
@@ -188,11 +199,20 @@ public class CommonUtils extends CustomWebDriverWait {
         ((JavascriptExecutor) this.driver).executeScript("arguments[0].scrollTop=500;", webElement);
     }
 
+    /**
+     *
+     * @param by
+     * @return true if given element locator is selected.
+     */
     public boolean _isElementSelected(By by) {
         _isElementPresent(by);
         return driver.findElement(by).isSelected();
     }
 
+    /**
+     * Switch to next tab.
+     * throw exception if more than two tabs open at same driver instance
+     */
     public void _switchTheNextTab() {
         var currentWindow = driver.getWindowHandle();
         Set<String> windows = driver.getWindowHandles();
@@ -204,16 +224,26 @@ public class CommonUtils extends CustomWebDriverWait {
         }
     }
 
+    /**
+     *
+     * @param element
+     * @return string value of given element
+     * @throws Exception
+     */
     public String _getText(WebElement element) throws Exception {
         By eID = _convertElemToBy(element);
         return driver.findElement(eID).getText();
     }
 
+    /**
+     * Append logs in Scenarios steps.
+     * @param message
+     */
     public void _log(Object message) {
         log.info(String.valueOf(message));
         if (customConfig.getScenario() != null)
             customConfig.getScenario().log("\t> " + message.toString());
         else
-            System.out.println("");
+            log.warning("Scenario not found.");
     }
 }
