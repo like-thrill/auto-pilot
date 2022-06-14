@@ -1,4 +1,4 @@
-package com.sample.auto.pagefactory.web;
+package com.sample.auto.pages.web;
 
 import com.sample.auto.utilities.CommonUtils;
 import org.openqa.selenium.By;
@@ -58,45 +58,45 @@ public class HomePage extends CommonUtils {
     }
 
     public void clickOnHamburgerIcon() throws Exception {
-        _click(hamburger);
+        click(hamburger);
     }
 
     public void scrollAndClickOnTVApplications() {
-        _scrollToElement(tvAppliances);
-        _click(tvAppliances);
+        scrollToElement(tvAppliances);
+        click(tvAppliances);
     }
 
     public void selectSubCategoryAs(String category) throws Exception {
-        _clickOnText(category);
+        clickOnText(category);
     }
 
     public boolean selectBrandAs(String brandName) {
-        _waitForWebElementVisible(productByBrand(brandName));
-        _scrollToElement(productByBrand(brandName));
-        _click(productByBrand(brandName));
-        _waitForWebElementVisible(searchResultHeader);
-        return _isElementSelected(productByBrandInput(brandName));
+        isElementVisible(productByBrand(brandName));
+        scrollToElement(productByBrand(brandName));
+        click(productByBrand(brandName));
+        isElementVisible(searchResultHeader);
+        return isElementSelected(productByBrandInput(brandName));
     }
 
     public boolean selectFilterRange(String category) {
-        _click(featuredCategoryDropDown());
-        _click(featuredCategory(category));
-        _waitForWebElementVisible(searchResultHeader);
-        return _isElementPresent(featuredCategoryOption(category));
+        click(featuredCategoryDropDown());
+        click(featuredCategory(category));
+        isElementVisible(searchResultHeader);
+        return isElementPresent(featuredCategoryOption(category));
     }
 
     public boolean selectNthProduct(int number) throws Exception {
-        _waitForWebElementVisible(searchResults());
+        isElementVisible(searchResults());
         List<WebElement> items = driver.findElements(searchResults());
         items.get(number).click();
         var productName = items.get(number).getText();
-        _switchTheNextTab();
-        var productTitle = _getText(individualProductTitle).strip();
+        switchTheNextTab();
+        var productTitle = getText(individualProductTitle).strip();
         return productName.contains(productTitle);
     }
 
     public boolean isAboutTheProductTitleDisplayed() {
-        return _isTextContainsPresent("About this item");
+        return isTextContainsPresent("About this item");
     }
 
     public String logDetails() {

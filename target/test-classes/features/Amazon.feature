@@ -8,3 +8,4 @@ Feature: Sample Amazon search feature validation
     When search for TV
     Then select range filter high to low
     And check product with 2nd highest price
+    Then verify about product and log details

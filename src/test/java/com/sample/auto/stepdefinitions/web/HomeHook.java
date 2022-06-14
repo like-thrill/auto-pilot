@@ -1,6 +1,6 @@
 package com.sample.auto.stepdefinitions.web;
 
-import com.sample.auto.pagefactory.web.HomePage;
+import com.sample.auto.pages.web.HomePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

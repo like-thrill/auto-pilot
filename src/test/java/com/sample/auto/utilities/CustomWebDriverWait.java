@@ -25,7 +25,7 @@ public class CustomWebDriverWait extends LocatorConverter {
      * @param by By value of element
      * @return boolean
      */
-    protected boolean _isElementVisible(By by) {
+    protected boolean isElementVisible(By by) {
         try {
             new FluentWait<WebDriver>(driver)
                     .withTimeout(Duration.ofSeconds(timeOut))
@@ -50,9 +50,9 @@ public class CustomWebDriverWait extends LocatorConverter {
      * @param element WebElement value of element
      * @return boolean
      */
-    protected boolean _isElementVisible(WebElement element) {
+    protected boolean isElementVisible(WebElement element) {
         try {
-            By eId = _convertElemToBy(element);
+            By eId = convertElemToBy(element);
             new FluentWait<WebDriver>(driver)
                     .withTimeout(Duration.ofSeconds(timeOut))
                     .pollingEvery(Duration.ofMillis(10))
@@ -76,9 +76,9 @@ public class CustomWebDriverWait extends LocatorConverter {
      * @param element WebElement value of element
      * @return boolean
      */
-    protected boolean _isElementPresent(WebElement element) {
+    protected boolean isElementPresent(WebElement element) {
         try {
-            By eID = _convertElemToBy(element);
+            By eID = convertElemToBy(element);
             new FluentWait<WebDriver>(driver)
                     .withTimeout(Duration.ofSeconds(timeOut))
                     .pollingEvery(Duration.ofMillis(10))
@@ -102,7 +102,7 @@ public class CustomWebDriverWait extends LocatorConverter {
      * @param by WebElement value of element
      * @return boolean
      */
-    protected boolean _isElementPresent(By by) {
+    protected boolean isElementPresent(By by) {
         try {
             new FluentWait<WebDriver>(driver)
                     .withTimeout(Duration.ofSeconds(timeOut))
@@ -121,7 +121,7 @@ public class CustomWebDriverWait extends LocatorConverter {
         }
     }
 
-    protected void _sleep(int seconds) {
+    protected void sleep(int seconds) {
         try {
             Thread.sleep(seconds);
         } catch (Exception e) {
@@ -136,14 +136,5 @@ public class CustomWebDriverWait extends LocatorConverter {
     protected void reSetImplicitWait() throws InterruptedException {
         this.driver.manage().wait(0);
     }
-
-    protected void _waitForWebElementVisible(WebElement element) {
-        _isElementVisible(element);
-    }
-
-    protected void _waitForWebElementVisible(By by) {
-        _isElementVisible(by);
-    }
-
     //Add more conditions if required for wait statement
 }

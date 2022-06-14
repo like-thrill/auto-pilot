@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LocatorConverter {
-    protected By _convertElemToBy(WebElement element) throws Exception {
+    protected By convertElemToBy(WebElement element) throws Exception {
         String locator;
         StringBuilder elem = new StringBuilder();
         String eleString = element.toString();
@@ -81,7 +81,7 @@ public class LocatorConverter {
      * @param wildCard
      * @return
      */
-    protected By _getByOfText(String textValue, boolean isContains, boolean wildCard) {
+    protected By getByOfText(String textValue, boolean isContains, boolean wildCard) {
         if (isContains) {
             if (wildCard)
                 return By.xpath("//*[contains(.,\"" + textValue + "\")]");

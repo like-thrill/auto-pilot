@@ -24,10 +24,10 @@ public class CommonUtils extends CustomWebDriverWait {
      * @param textValue
      * @return true if given text present in dom else false
      */
-    public boolean _isTextContainsPresent(String textValue) {
+    public boolean isTextContainsPresent(String textValue) {
         try {
-            By eID = _getByOfText(textValue, true, false);
-            return _isElementPresent(eID);
+            By eID = getByOfText(textValue, true, false);
+            return isElementPresent(eID);
         } catch (Exception exception) {
             return false;
         }
@@ -39,10 +39,10 @@ public class CommonUtils extends CustomWebDriverWait {
      * @param wildCard
      * @return true if given text present in dom else false with wildcard string
      */
-    public boolean _isTextContainsPresent(String textValue, boolean wildCard) {
+    public boolean isTextContainsPresent(String textValue, boolean wildCard) {
         try {
-            By eID = _getByOfText(textValue, true, wildCard);
-            return _isElementPresent(eID);
+            By eID = getByOfText(textValue, true, wildCard);
+            return isElementPresent(eID);
         } catch (Exception exception) {
             return false;
         }
@@ -53,10 +53,10 @@ public class CommonUtils extends CustomWebDriverWait {
      * @param textValue
      * @return
      */
-    public boolean _isTextPresent(String textValue) {
+    public boolean isTextPresent(String textValue) {
         try {
-            By eID = _getByOfText(textValue, false, false);
-            return _isElementPresent(eID);
+            By eID = getByOfText(textValue, false, false);
+            return isElementPresent(eID);
         } catch (Exception exception) {
             return false;
         }
@@ -68,9 +68,9 @@ public class CommonUtils extends CustomWebDriverWait {
      * @param element      WebElement
      * @param keysSequence Text to type-in
      */
-    public void _sendKeys(WebElement element, String keysSequence) throws Exception {
-        By eId = _convertElemToBy(element);
-        if (!_isElementVisible(eId))
+    public void sendKeys(WebElement element, String keysSequence) throws Exception {
+        By eId = convertElemToBy(element);
+        if (!isElementVisible(eId))
             throw new RuntimeException("Unable to locate the element even after waiting for "
                     + timeOut + " seconds");
         driver.findElement(eId).clear();
@@ -83,9 +83,9 @@ public class CommonUtils extends CustomWebDriverWait {
      * @param element WebElement
      * @param keys    Text to type-in
      */
-    public void _sendKeys(WebElement element, Keys keys) throws Exception {
-        By eId = _convertElemToBy(element);
-        if (!_isElementVisible(eId))
+    public void sendKeys(WebElement element, Keys keys) throws Exception {
+        By eId = convertElemToBy(element);
+        if (!isElementVisible(eId))
             throw new RuntimeException("Unable to locate the element even after waiting for "
                     + timeOut + " seconds");
         driver.findElement(eId).clear();
@@ -98,8 +98,8 @@ public class CommonUtils extends CustomWebDriverWait {
      * @param by   WebElement
      * @param keys Text to type-in
      */
-    public void _sendKeys(By by, Keys keys) {
-        if (!_isElementVisible(by))
+    public void sendKeys(By by, Keys keys) {
+        if (!isElementVisible(by))
             throw new RuntimeException("Unable to locate the element even after waiting for "
                     + timeOut + " seconds");
         driver.findElement(by).clear();
@@ -112,8 +112,8 @@ public class CommonUtils extends CustomWebDriverWait {
      * @param element      By
      * @param keysSequence Text to type-in
      */
-    public void _sendKeys(By element, String keysSequence) {
-        if (!_isElementVisible(element))
+    public void sendKeys(By element, String keysSequence) {
+        if (!isElementVisible(element))
             throw new RuntimeException("Unable to locate the element even after waiting for "
                     + timeOut + " seconds");
         driver.findElement(element).clear();
@@ -125,9 +125,9 @@ public class CommonUtils extends CustomWebDriverWait {
      *
      * @param element WebElement
      */
-    public void _click(WebElement element) throws Exception {
-        By eID = _convertElemToBy(element);
-        if (!_isElementVisible(eID))
+    public void click(WebElement element) throws Exception {
+        By eID = convertElemToBy(element);
+        if (!isElementVisible(eID))
             throw new RuntimeException("Unable to locate the element even after waiting for "
                     + timeOut + " seconds");
         driver.findElement(eID).click();
@@ -138,8 +138,8 @@ public class CommonUtils extends CustomWebDriverWait {
      *
      * @param by WebElement
      */
-    public void _click(By by) {
-        if (!_isElementVisible(by))
+    public void click(By by) {
+        if (!isElementVisible(by))
             throw new RuntimeException("Unable to locate the element even after waiting for "
                     + timeOut + " seconds");
         driver.findElement(by).click();
@@ -150,9 +150,9 @@ public class CommonUtils extends CustomWebDriverWait {
      *
      * @param text String
      */
-    public void _clickOnTextContains(String text) throws Exception {
-        By element = _getByOfText(text, true, false);
-        if (!_isElementVisible(element))
+    public void clickOnTextContains(String text) throws Exception {
+        By element = getByOfText(text, true, false);
+        if (!isElementVisible(element))
             throw new RuntimeException("Unable to locate the element even after waiting for " + timeOut + " seconds");
         driver.findElement(element).click();
     }
@@ -162,9 +162,9 @@ public class CommonUtils extends CustomWebDriverWait {
      *
      * @param text String
      */
-    public void _clickOnText(String text) throws Exception {
-        By element = _getByOfText(text, false, false);
-        if (!_isElementVisible(element))
+    public void clickOnText(String text) throws Exception {
+        By element = getByOfText(text, false, false);
+        if (!isElementVisible(element))
             throw new RuntimeException("Unable to locate the element even after waiting for " + timeOut + " seconds");
         driver.findElement(element).click();
     }
@@ -174,7 +174,7 @@ public class CommonUtils extends CustomWebDriverWait {
      *
      * @param element WebElement
      */
-    public void _scrollToElement(WebElement element) {
+    public void scrollToElement(WebElement element) {
         Coordinates cor = ((Locatable) element).getCoordinates();
         cor.inViewPort();
     }
@@ -184,7 +184,7 @@ public class CommonUtils extends CustomWebDriverWait {
      *
      * @param by By
      */
-    public void _scrollToElement(By by) {
+    public void scrollToElement(By by) {
         WebElement element = driver.findElement(by);
         Coordinates cor = ((Locatable) element).getCoordinates();
         cor.inViewPort();
@@ -195,7 +195,7 @@ public class CommonUtils extends CustomWebDriverWait {
      *
      * @param webElement WebElement
      */
-    public void _scrollWithinElement(WebElement webElement) {
+    public void scrollWithinElement(WebElement webElement) {
         ((JavascriptExecutor) this.driver).executeScript("arguments[0].scrollTop=500;", webElement);
     }
 
@@ -204,8 +204,8 @@ public class CommonUtils extends CustomWebDriverWait {
      * @param by
      * @return true if given element locator is selected.
      */
-    public boolean _isElementSelected(By by) {
-        _isElementPresent(by);
+    public boolean isElementSelected(By by) {
+        isElementPresent(by);
         return driver.findElement(by).isSelected();
     }
 
@@ -213,7 +213,7 @@ public class CommonUtils extends CustomWebDriverWait {
      * Switch to next tab.
      * throw exception if more than two tabs open at same driver instance
      */
-    public void _switchTheNextTab() {
+    public void switchTheNextTab() {
         var currentWindow = driver.getWindowHandle();
         Set<String> windows = driver.getWindowHandles();
         if (windows.size() > 2)
@@ -230,8 +230,8 @@ public class CommonUtils extends CustomWebDriverWait {
      * @return string value of given element
      * @throws Exception
      */
-    public String _getText(WebElement element) throws Exception {
-        By eID = _convertElemToBy(element);
+    public String getText(WebElement element) throws Exception {
+        By eID = convertElemToBy(element);
         return driver.findElement(eID).getText();
     }
 
@@ -239,7 +239,7 @@ public class CommonUtils extends CustomWebDriverWait {
      * Append logs in Scenarios steps.
      * @param message
      */
-    public void _log(Object message) {
+    public void log(Object message) {
         log.info(String.valueOf(message));
         if (customConfig.getScenario() != null)
             customConfig.getScenario().log("\t> " + message.toString());
