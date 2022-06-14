@@ -50,7 +50,7 @@ public class HomePage extends CommonUtils {
     }
 
     private By featuredCategoryDropDown() {
-        return By.xpath("//*[contains(@class,'dropdown-label') and text()='Sort by:']");
+        return By.xpath("//*[contains(@class,'dropdown-label') and text()='Sort by:']/..");
     }
 
     private By itemList() {
@@ -79,6 +79,7 @@ public class HomePage extends CommonUtils {
     }
 
     public boolean selectFilterRange(String category) {
+        isElementVisible(searchResultHeader);
         click(featuredCategoryDropDown());
         click(featuredCategory(category));
         isElementVisible(searchResultHeader);
