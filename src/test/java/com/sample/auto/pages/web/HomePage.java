@@ -78,22 +78,22 @@ public class HomePage extends CommonUtils {
         return isElementSelected(productByBrandInput(brandName));
     }
 
-    public boolean selectFilterRange(String category) {
+    public void selectFilterRange(String category) {
         isElementVisible(searchResultHeader);
         click(featuredCategoryDropDown());
         click(featuredCategory(category));
         isElementVisible(searchResultHeader);
-        return isElementPresent(featuredCategoryOption(category));
+        isElementPresent(featuredCategoryOption(category));
     }
 
-    public boolean selectNthProduct(int number) throws Exception {
+    public void selectNthProduct(int number) throws Exception {
         isElementVisible(searchResults());
         List<WebElement> items = driver.findElements(searchResults());
         items.get(number).click();
         var productName = items.get(number).getText();
         switchTheNextTab();
         var productTitle = getText(individualProductTitle).strip();
-        return productName.contains(productTitle);
+        productName.contains(productTitle);
     }
 
     public boolean isAboutTheProductTitleDisplayed() {

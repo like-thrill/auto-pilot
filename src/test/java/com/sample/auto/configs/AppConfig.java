@@ -20,12 +20,12 @@ public class AppConfig implements ApplicationContextAware {
 
     @Value("${app.url}")
     private String url;
-
-    @Value("${app.user.name}")
-    private String userName;
-
-    @Value("${app.user.password}")
-    private String userPassword;
+    @Value("${app.search.category}")
+    private String category;
+    @Value("${app.search.nth.device}")
+    private Integer nThDevice;
+    @Value("${app.search.brand}")
+    private String brand;
 
     private static ApplicationContext context;
 

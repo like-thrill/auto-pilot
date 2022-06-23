@@ -1,5 +1,6 @@
 package com.sample.auto.stepdefinitions.web;
 
+import com.sample.auto.configs.AppConfig;
 import com.sample.auto.pages.web.HomePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -14,6 +15,8 @@ public class HomeHook {
 
     @Autowired
     private WebDriver web;
+    @Autowired
+    private AppConfig appConfig;
     private HomePage homePage;
 
     @When("search for TV")
@@ -26,26 +29,25 @@ public class HomeHook {
         homePage.log("Scroll in menu till TV, Applications");
         homePage.scrollAndClickOnTVApplications();
 
-        homePage.log("Select subcategory as 'Televisions'.");
-        homePage.selectSubCategoryAs("Televisions");
+        homePage.log("Select subcategory as '" + appConfig.getCategory() + "'.");
+        homePage.selectSubCategoryAs(appConfig.getCategory());
 
-        homePage.log("Select brand as Samsung.");
-        boolean flag = homePage.selectBrandAs("Samsung");
-        Assert.assertTrue(flag, "Samsung as a brand not selected.");
+        homePage.log("Select brand as " + appConfig.getBrand() + ".");
+        boolean flag = homePage.selectBrandAs(appConfig.getBrand());
+        Assert.assertTrue(flag, appConfig.getBrand() + " as a brand not selected.");
     }
 
     @Then("select range filter high to low")
     public void selectRangeFilterHighToLow() {
         homePage.log("Select Sort By: feature as High to Low.");
-        boolean flag = homePage.selectFilterRange("High to Low");
-        //Assert.assertTrue(flag, "Price: High to Low featured not selected.");
+        homePage.selectFilterRange("High to Low");
     }
 
-    @And("check product with {int}nd highest price")
-    public void checkProductWithNdHighestPrice(int arg0) throws Exception {
+    @And("check product with nth highest price")
+    public void checkProductWithNdHighestPrice() throws Exception {
+        var arg0 = appConfig.getNThDevice();
         homePage.log("Select " + arg0 + "nd highest product in new tab.");
         homePage.selectNthProduct(arg0);
-        //Assert.assertTrue(homePage.selectNthProduct(arg0), arg0 + "nd highest product title not matched in new tab. ");
     }
 
     @Then("verify about product and log details")
